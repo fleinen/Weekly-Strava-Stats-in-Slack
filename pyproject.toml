@@ -13,6 +13,7 @@ python-dotenv = "^1.0.1"
 slack-bolt = "^1.21.2"
 appdirs = "^1.4.4"
 click = "^8.1.7"
+groq = "^0.12.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^6.1.0"
