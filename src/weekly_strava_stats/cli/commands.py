@@ -75,7 +75,8 @@ def post_last_weeks_stats():
         return
 
     groq_api_key = os.getenv('GROQ_API_KEY')
-    message_builder = MessageBuilder(groq_api_key)
+    strava_club_url = os.getenv('STRAVA_CLUB_URL')
+    message_builder = MessageBuilder(groq_api_key, strava_club_url)
     message = message_builder.build(last_weeks_stats, compare_stats)
 
     slack_connector = SlackChannelConnector(slack_token, slack_channel)
