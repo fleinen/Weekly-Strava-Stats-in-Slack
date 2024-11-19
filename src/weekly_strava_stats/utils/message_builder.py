@@ -8,6 +8,12 @@ import weekly_strava_stats
 
 class MessageBuilder:
     def __init__(self, groq_api_key: Optional[str]):
+        """
+        Initialize the MessageBuilder with the given GROQ API key.
+
+        Args:
+            groq_api_key (Optional[str]): The API key for accessing the GROQ service. Can be None if not required.
+        """
         self.groq_api_key = groq_api_key
 
     def build(self, stats: WeekStats, last_week_stats: Optional[WeekStats] = None) -> str:
