@@ -7,14 +7,16 @@ import weekly_strava_stats
 
 
 class MessageBuilder:
-    def __init__(self, groq_api_key: Optional[str]):
+    def __init__(self, groq_api_key: Optional[str], club_url: Optional[str] = None):
         """
         Initialize the MessageBuilder with the given GROQ API key.
 
         Args:
             groq_api_key (Optional[str]): The API key for accessing the GROQ service. Can be None if not required.
+            club_url (Optional[str], optional): The link to the Strava club. Defaults to None.
         """
         self.groq_api_key = groq_api_key
+        self.club_url = club_url
 
     def build(self, stats: WeekStats, last_week_stats: Optional[WeekStats] = None) -> str:
         """
@@ -29,6 +31,8 @@ class MessageBuilder:
         """
         message = MessageBuilder.get_stats_message(stats, last_week_stats)
         message += "\n\n" + self.get_quote(original_message=message)
+        if self.club_url:
+            message += f"\n\nJoin the club: {self.club_url}"
 
         return message
 
