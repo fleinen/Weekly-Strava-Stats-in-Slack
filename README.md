@@ -22,9 +22,11 @@ poetry install
 ## Configure
 
 ### Strava Widget URL
-<todo>
-
-The url must be set as an environment variable with the key `STRAVA_WIDGET_URL` which can be set in the `.env` file.
+Currently, the application uses the Strava widget to fetch the weekly running stats. To get the widget URL:
+1. Go to https://www.strava.com/ and navigate to your club's page
+1. Click on "Share Club Runs"
+1. In the text box showing the code for the **Summary Widget**, copy the iframe's `src` url
+1. This url must be set as an environment variable with the key `STRAVA_WIDGET_URL` which can be set in the `.env` file.
 
 ### Create and Configure a Slack App
 
