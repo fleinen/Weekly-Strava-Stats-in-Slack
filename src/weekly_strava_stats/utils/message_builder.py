@@ -11,6 +11,16 @@ class MessageBuilder:
         self.groq_api_key = groq_api_key
 
     def build(self, stats: WeekStats, last_week_stats: Optional[WeekStats] = None) -> str:
+        """
+        Builds a message string containing the current week's statistics and a quote.
+
+        Args:
+            stats (WeekStats): The statistics for the current week.
+            last_week_stats (Optional[WeekStats], optional): The statistics for the previous week. Defaults to None.
+
+        Returns:
+            str: A message string containing the current week's statistics and a quote.
+        """
         message = MessageBuilder.get_stats_message(stats, last_week_stats)
         message += "\n\n" + self.get_quote(original_message=message)
 
