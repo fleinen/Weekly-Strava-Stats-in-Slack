@@ -17,8 +17,6 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /home/${{ secrets.REMOTE_USER }}/${{ github.event.repository.name }}
-          pwd
           git pull
           source .venv/bin/activate
-          poetry self update
           poetry install
