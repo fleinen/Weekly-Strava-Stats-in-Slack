@@ -139,7 +139,7 @@ class MessageBuilder:
         prompt_config = random.choice(prompt_configs)
         author, user_prompt, language = prompt_config.split(';')
 
-        full_prompt = f"I provide you the aggregated running stats of our running group and I want you to come up with a quote to comment on it that sounds like it's from {author} {user_prompt}. Just reply with the quote in {language}, no explanation or quotation marks around it."
+        full_prompt = f"I provide you the aggregated running stats of our running group and I want you to come up with a quote to comment on it that sounds like it's from {author} {user_prompt}. Just reply with the quote in {language}, no explanation or quotation marks around it. Reference numbers."
         full_prompt += f"\n\n{original_message}"
 
         groq_client = Groq(api_key=self.groq_api_key)
