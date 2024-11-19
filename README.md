@@ -74,3 +74,8 @@ To download data every day at 11:55 PM and post the stats every Monday at 8:30 A
 55 23 * * * cd /path/to/Weekly-Strava-Stats-in-Slack && poetry run weekly-strava-stats fetch-strava-stats
 30 8 * * 1 cd /path/to/Weekly-Strava-Stats-in-Slack && poetry run weekly-strava-stats post-last-weeks-stats
 ```
+
+### Optional: Add a Groq API Key
+There will be a quote at the end of every message. If a Groq API key is provided, it will be a fictional quote from commenting on the Strava stats. If not, it will be a random quote from a hardcoded list.
+
+You can generte an API key [here](https://console.groq.com/keys). The key must be set as an environment variable with the key `GROQ_API_KEY` which can be set in the `.env` file.

@@ -74,7 +74,9 @@ def post_last_weeks_stats():
         logging.error("No stats found for last week")
         return
 
-    message = MessageBuilder.build(last_weeks_stats, compare_stats)
+    groq_api_key = os.getenv('GROQ_API_KEY')
+    message_builder = MessageBuilder(groq_api_key)
+    message = message_builder.build(last_weeks_stats, compare_stats)
 
     slack_connector = SlackChannelConnector(slack_token, slack_channel)
     slack_connector.post_message(slack_channel, message)
