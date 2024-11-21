@@ -80,5 +80,7 @@ There will be a quote at the end of every message. If a Groq API key is provided
 
 You can generte an API key [here](https://console.groq.com/keys). The key must be set as an environment variable with the key `GROQ_API_KEY` which can be set in the `.env` file.
 
+By default, the predefined prompts from the file `src/weeklt_strava_stats/data/quote_prompts.csv` will be used. If you want to use your own prompts, you can set the environment variable `QUOTE_PROMPTS_PATH` in the `.env` file.
+
 ### Optional: Add a link to the Strava Club
 If you want to include a link to the Strava club in the message, you can set the environment variable `STRAVA_CLUB_URL` in the `.env` file.
