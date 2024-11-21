@@ -1,3 +1,4 @@
+from pathlib import Path
 import random
 from typing import Optional
 from weekly_strava_stats.storage.week_stats import WeekStats
@@ -7,16 +8,21 @@ import weekly_strava_stats
 
 
 class MessageBuilder:
-    def __init__(self, groq_api_key: Optional[str], club_url: Optional[str] = None):
+    def __init__(self, groq_api_key: Optional[str], quote_prompts_path: Optional[Path] = None, club_url: Optional[str] = None):
         """
-        Initialize the MessageBuilder with the given GROQ API key.
+        Initialize the MessageBuilder.
 
         Args:
-            groq_api_key (Optional[str]): The API key for accessing the GROQ service. Can be None if not required.
-            club_url (Optional[str], optional): The link to the Strava club. Defaults to None.
+            groq_api_key (str, optional): The API key for accessing the GROQ service. Can be None if not required.
+            quote_prompts_path (Path, optional): The path to the quote prompts file. If not provided, the default prompts are used. Defaults to None.
+            club_url (str, optional): The link to the Strava club. Defaults to None.
         """
         self.groq_api_key = groq_api_key
         self.club_url = club_url
+
+        data_path = resources.files(weekly_strava_stats).joinpath("data")
+        self.quote_prompts_path = quote_prompts_path if quote_prompts_path else data_path / "quote_prompts.csv"
+        self.default_prompt_path = data_path / "quotes.txt"
 
     def build(self, stats: WeekStats, last_week_stats: Optional[WeekStats] = None) -> str:
         """
@@ -118,7 +124,7 @@ class MessageBuilder:
             str: The retrieved or generated quote.
         """
         if not self.groq_api_key:
-            return MessageBuilder.get_default_quote()
+            return self.get_default_quote()
         return MessageBuilder.get_generated_quote(self, original_message)
 
     def get_generated_quote(self, original_message: str) -> str:
@@ -129,8 +135,7 @@ class MessageBuilder:
         Returns:
             str: A generated quote formatted with the author's name and the quote in italics.
         """
-        with resources.path(weekly_strava_stats, 'data') as data_dir:
-            quotes_path = data_dir / "quote_prompts.csv"
+        quotes_path = self.quote_prompts_path
 
         with open(quotes_path, 'r') as quotes_file:
             # read without header (first line)
@@ -156,18 +161,14 @@ class MessageBuilder:
         message = f"{author}: _{fake_quote}_"
         return message
 
-    @staticmethod
-    def get_default_quote() -> str:
+    def get_default_quote(self) -> str:
         """
         Retrieves a random quote from a predefined list of quotes stored in a text file.
 
         Returns:
             str: A randomly selected quote from the quotes file.
         """
-        with resources.path(weekly_strava_stats, 'data') as data_dir:
-            quotes_path = data_dir / "quotes.txt"
-
-        with open(quotes_path, 'r') as quotes_file:
+        with open(self.default_quote_path, 'r') as quotes_file:
             default_quotes = quotes_file.readlines()
 
         return f"_{random.choice(default_quotes)}_"

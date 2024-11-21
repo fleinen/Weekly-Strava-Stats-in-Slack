@@ -1,5 +1,5 @@
-import logging
 import os
+import logging
 import click
 from dotenv import load_dotenv
 
@@ -74,9 +74,11 @@ def post_last_weeks_stats():
         logging.error("No stats found for last week")
         return
 
-    groq_api_key = os.getenv('GROQ_API_KEY')
-    strava_club_url = os.getenv('STRAVA_CLUB_URL')
-    message_builder = MessageBuilder(groq_api_key, strava_club_url)
+    message_builder = MessageBuilder(
+        groq_api_key=os.getenv('GROQ_API_KEY'),
+        quote_prompts_path=os.getenv('QUOTE_PROMPTS_PATH'),
+        club_url=os.getenv('STRAVA_CLUB_URL')
+    )
     message = message_builder.build(last_weeks_stats, compare_stats)
 
     slack_connector = SlackChannelConnector(slack_token, slack_channel)
