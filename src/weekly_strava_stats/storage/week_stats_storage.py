@@ -57,7 +57,7 @@ class WeekStatsStorage:
             Optional[StravaStats]: The stats for the requested week. None if the stats are not found.
         """
         now = datetime.now()
-        current_year = now.year
+        current_year = now.isocalendar()[0]
         current_week_number = now.isocalendar()[1]
 
         target_week_number = current_week_number + relative_week_number
